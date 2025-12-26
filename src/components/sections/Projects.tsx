@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Github, ExternalLink, Star, GitFork, Code, Calendar } from 'lucide-react'
 import { GitHubRepo } from '@/types/github'
-import { GITHUB_API_URL } from '@/utils/constants'
 import LoadingSpinner from '@/components/ui/LoadingSpinner'
 
 export default function Projects() {
@@ -15,7 +14,6 @@ export default function Projects() {
   useEffect(() => {
     const fetchRepos = async () => {
       try {
-        console.log('Fetching repos from GitHub API...')
         const response = await fetch('/api/github-repos')
         
         if (!response.ok) {
@@ -23,17 +21,12 @@ export default function Projects() {
         }
         
         const data: GitHubRepo[] = await response.json()
-        console.log('Raw GitHub data:', data)
         
         // Filter and sort repos
         const filteredRepos = data
           .filter(repo => {
-            console.log(`Checking repo: ${repo.name}, Fork: ${repo.fork}, Homepage: ${repo.homepage}`)
-            
-            return (
-              !repo.fork && // Exclude forks
-              repo.name !== 'The-SaadKhan' // Exclude profile repository
-            )
+            // Only exclude forks, keeping your Portfolio repo visible
+            return !repo.fork
           })
           .sort((a, b) => {
             // Sort by last updated
@@ -42,8 +35,6 @@ export default function Projects() {
             return dateB - dateA
           })
         
-        console.log('Filtered repos count:', filteredRepos.length)
-        console.log('Filtered repos:', filteredRepos)
         setRepos(filteredRepos)
         
       } catch (err) {
@@ -57,30 +48,25 @@ export default function Projects() {
     fetchRepos()
   }, [])
 
-  // Safe reload function
   const handleReload = () => {
     if (typeof window !== 'undefined') {
       window.location.reload()
     }
   }
 
-  // Manual deployment URLs for immediate fix - TYPED PROPERLY
+  // Manual deployment URLs (Empty for now as requested)
   const DEPLOYED_PROJECTS: Record<string, string> = {
-    'AI-COURSES': 'https://ai-courses-alpha.vercel.app',
-    // Add other deployed projects here as needed
+    // Example: 'Portfolio': 'https://your-portfolio-url.com',
   }
 
-  // Enhanced deployment detection with manual fallback - FIXED TYPE ERROR
   const getDeploymentInfo = (repo: GitHubRepo) => {
-    // Check manual config first (immediate fix)
     const manualUrl = DEPLOYED_PROJECTS[repo.name]
     
-    // Check GitHub homepage field
+    // Check GitHub homepage field (if you set a URL in your repo settings)
     const githubHomepage = repo.homepage && 
       repo.homepage.trim() !== '' && 
       (repo.homepage.startsWith('http://') || repo.homepage.startsWith('https://'))
     
-    // Use manual URL first, then GitHub homepage
     const deploymentUrl = manualUrl || (githubHomepage ? repo.homepage : null)
     
     return {
@@ -93,9 +79,7 @@ export default function Projects() {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.15
-      }
+      transition: { staggerChildren: 0.15 }
     }
   }
 
@@ -104,10 +88,7 @@ export default function Projects() {
     visible: { 
       opacity: 1, 
       y: 0,
-      transition: {
-        duration: 0.5,
-        ease: "easeOut"
-      }
+      transition: { duration: 0.5, ease: "easeOut" }
     }
   }
 
@@ -117,46 +98,29 @@ export default function Projects() {
       TypeScript: 'bg-blue-500',
       Python: 'bg-green-500',
       'C++': 'bg-blue-600',
-      C: 'bg-gray-600',
       HTML: 'bg-orange-500',
       CSS: 'bg-blue-400',
-      PHP: 'bg-purple-500',
-      Java: 'bg-red-500',
       React: 'bg-cyan-500',
-      Vue: 'bg-green-400',
-      'Jupyter Notebook': 'bg-orange-400',
       'Next.js': 'bg-black'
     }
     return colors[language || ''] || 'bg-gray-500'
   }
 
   const formatDate = (dateString: string) => {
-    const date = new Date(dateString)
-    return date.toLocaleDateString('en-US', { 
-      year: 'numeric', 
-      month: 'short', 
-      day: 'numeric' 
+    return new Date(dateString).toLocaleDateString('en-US', { 
+      year: 'numeric', month: 'short', day: 'numeric' 
     })
   }
 
-  // Enhanced description generation
   const generateDescription = (name: string, language: string | null, hasDeployment: boolean) => {
     const cleanName = name.replace(/-/g, ' ').replace(/_/g, ' ')
     
-    // Special descriptions for known projects
-    if (name === 'AI-COURSES') {
-      return 'AI-powered course generation platform built with Next.js. Create comprehensive courses using artificial intelligence with interactive learning features.'
+    if (name === 'Portfolio') {
+      return 'My personal portfolio website showcasing my projects and skills.'
     }
     
-    if (hasDeployment) {
-      return `${cleanName} - A ${language || 'web'} project with live demo available.`
-    }
-    
-    if (language) {
-      return `${cleanName} - Built with ${language} showcasing development skills.`
-    }
-    
-    return `${cleanName} - An innovative project demonstrating coding expertise.`
+    if (hasDeployment) return `${cleanName} - Live project available.`
+    return `${cleanName} - Built with ${language || 'code'}.`
   }
 
   return (
@@ -169,63 +133,27 @@ export default function Projects() {
           variants={containerVariants}
           className="text-center mb-16"
         >
-          <motion.h2
-            variants={itemVariants}
-            className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4"
-          >
+          <motion.h2 variants={itemVariants} className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
             Featured <span className="gradient-text">Projects</span>
           </motion.h2>
-          <motion.p
-            variants={itemVariants}
-            className="text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto"
-          >
-            A showcase of my latest GitHub projects demonstrating full-stack development and problem-solving skills
+          <motion.p variants={itemVariants} className="text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
+            A showcase of my latest work from GitHub
           </motion.p>
         </motion.div>
 
         {loading ? (
           <div className="text-center">
             <LoadingSpinner />
-            <p className="mt-4 text-gray-600 dark:text-gray-400">Loading projects from GitHub...</p>
+            <p className="mt-4 text-gray-600 dark:text-gray-400">Loading projects...</p>
           </div>
         ) : error ? (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center"
-          >
-            <div className="glass-effect rounded-xl p-8 max-w-2xl mx-auto">
-              <Code className="h-16 w-16 text-red-500 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-                Unable to Load Projects
-              </h3>
-              <p className="text-red-600 dark:text-red-400 mb-4">{error}</p>
-              <motion.button
-                onClick={handleReload}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="bg-primary-600 hover:bg-primary-700 text-white px-6 py-2 rounded-lg font-medium transition-colors"
-              >
-                Try Again
-              </motion.button>
-            </div>
-          </motion.div>
+          <div className="text-center text-red-500">{error}</div>
         ) : repos.length === 0 ? (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center"
-          >
-            <div className="glass-effect rounded-xl p-8 max-w-2xl mx-auto">
-              <Github className="h-16 w-16 text-gray-500 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-                No Projects Found
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400 mb-4">
-                Check console for debugging information.
-              </p>
-            </div>
-          </motion.div>
+          <div className="text-center text-gray-500">
+            <Github className="h-16 w-16 mx-auto mb-4 opacity-50" />
+            <h3 className="text-xl font-semibold">No Projects Found</h3>
+            <p>Projects will appear here once added to GitHub.</p>
+          </div>
         ) : (
           <motion.div
             initial="hidden"
@@ -244,11 +172,10 @@ export default function Projects() {
                   whileHover={{ scale: 1.02, y: -8 }}
                   className="glass-effect rounded-xl p-6 group hover:shadow-2xl transition-all duration-300 border border-white/20 dark:border-white/10"
                 >
-                  {/* Project Header */}
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex-1">
                       <h3 className="text-lg font-bold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors mb-2">
-                        {repo.name === 'AI-COURSES' ? 'AI Course Generator' : repo.name.replace(/-/g, ' ')}
+                        {repo.name.replace(/-/g, ' ')}
                       </h3>
                       {repo.language && (
                         <div className="flex items-center space-x-2">
@@ -260,7 +187,6 @@ export default function Projects() {
                       )}
                     </div>
                     
-                    {/* Action Buttons */}
                     <div className="flex space-x-2 ml-4">
                       <motion.a
                         href={repo.html_url}
@@ -269,7 +195,6 @@ export default function Projects() {
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
                         className="p-2 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
-                        title="View on GitHub"
                       >
                         <Github className="h-4 w-4" />
                       </motion.a>
@@ -281,7 +206,6 @@ export default function Projects() {
                           whileHover={{ scale: 1.1 }}
                           whileTap={{ scale: 0.9 }}
                           className="p-2 rounded-lg bg-primary-600 hover:bg-primary-700 text-white transition-colors"
-                          title="Live Demo"
                         >
                           <ExternalLink className="h-4 w-4" />
                         </motion.a>
@@ -289,14 +213,12 @@ export default function Projects() {
                     </div>
                   </div>
 
-                  {/* Description */}
                   <p className="text-gray-600 dark:text-gray-400 mb-4 text-sm leading-relaxed">
                     {repo.description || generateDescription(repo.name, repo.language, hasDeployment)}
                   </p>
 
-                  {/* Stats Bar */}
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center space-x-4 text-sm text-gray-500 dark:text-gray-400">
+                  <div className="flex items-center justify-between mt-auto">
+                    <div className="flex items-center space-x-4 text-sm text-gray-500">
                       <div className="flex items-center space-x-1">
                         <Star className="h-4 w-4" />
                         <span>{repo.stargazers_count}</span>
@@ -306,26 +228,8 @@ export default function Projects() {
                         <span>{repo.forks_count}</span>
                       </div>
                     </div>
-                    <div className="flex items-center space-x-1 text-sm text-gray-500 dark:text-gray-400">
-                      <Calendar className="h-4 w-4" />
-                      <span>{formatDate(repo.updated_at)}</span>
-                    </div>
-                  </div>
-
-                  {/* Project Status */}
-                  <div className="flex items-center justify-between">
-                    {hasDeployment ? (
-                      <span className="px-2 py-1 text-xs bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300 rounded-full">
-                        ✨ Live Demo
-                      </span>
-                    ) : (
-                      <span className="px-2 py-1 text-xs bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 rounded-full">
-                        🔧 In Development
-                      </span>
-                    )}
-                    
-                    <span className="text-xs text-gray-500 dark:text-gray-400">
-                      Updated {formatDate(repo.updated_at)}
+                    <span className="text-xs text-gray-500">
+                      {formatDate(repo.updated_at)}
                     </span>
                   </div>
                 </motion.div>
@@ -334,7 +238,7 @@ export default function Projects() {
           </motion.div>
         )}
 
-        {/* View All Projects Button */}
+        {/* View All Projects Button - Updated to your profile */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -342,7 +246,7 @@ export default function Projects() {
           className="text-center mt-12"
         >
           <motion.a
-            href="https://github.com/The-SaadKhan?tab=repositories"
+            href="https://github.com/Atee-Rawat?tab=repositories"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center space-x-2 bg-primary-600 hover:bg-primary-700 text-white px-8 py-3 rounded-lg font-medium transition-colors shadow-lg hover:shadow-xl"
