@@ -25,7 +25,6 @@ export default function Projects() {
         // Filter and sort repos
         const filteredRepos = data
           .filter(repo => {
-            // Only exclude forks, keeping your Portfolio repo visible
             return !repo.fork
           })
           .sort((a, b) => {
