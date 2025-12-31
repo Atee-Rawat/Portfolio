@@ -61,7 +61,6 @@ export default function Projects() {
   const getDeploymentInfo = (repo: GitHubRepo) => {
     const manualUrl = DEPLOYED_PROJECTS[repo.name]
     
-    // Check GitHub homepage field (if you set a URL in your repo settings)
     const githubHomepage = repo.homepage && 
       repo.homepage.trim() !== '' && 
       (repo.homepage.startsWith('http://') || repo.homepage.startsWith('https://'))
