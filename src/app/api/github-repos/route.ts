@@ -5,13 +5,11 @@ export async function GET() {
   const githubToken = process.env.GITHUB_TOKEN
 
   try {
-    const headers: Record<string, string> = {
-      'Content-Type': 'application/json',
-    }
-    
-    // Add token if available for higher rate limits
-    if (githubToken) {
-      headers['Authorization'] = `Bearer ${githubToken}`
+    if (!githubToken) {
+      return NextResponse.json(
+        { error: 'GITHUB_TOKEN is not configured' }, 
+        { status: 500 }
+      )
     }
 
     // GraphQL query to fetch pinned repositories
@@ -41,29 +39,38 @@ export async function GET() {
       }
     `
 
+    console.log('Fetching pinned repos for:', username)
+    console.log('Token present:', !!githubToken)
+    console.log('Token length:', githubToken?.length)
+
     const response = await fetch('https://api.github.com/graphql', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        ...headers,
+        'Authorization': `bearer ${githubToken}`,
       },
       body: JSON.stringify({ query }),
       cache: 'no-store'
     })
 
+    console.log('GraphQL Response status:', response.status)
+
+    const result = await response.json()
+
+    console.log('GraphQL Result:', JSON.stringify(result).substring(0, 500))
+
+    if (result.errors) {
+      console.error('GraphQL Errors:', result.errors)
+      return NextResponse.json(
+        { error: result.errors[0].message }, 
+        { status: 400 }
+      )
+    }
+
     if (!response.ok) {
       return NextResponse.json(
         { error: 'Failed to fetch pinned repositories' }, 
         { status: response.status }
-      )
-    }
-
-    const result = await response.json()
-
-    if (result.errors) {
-      return NextResponse.json(
-        { error: result.errors[0].message }, 
-        { status: 400 }
       )
     }
 
