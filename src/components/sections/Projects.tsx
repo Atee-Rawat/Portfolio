@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { Github, ExternalLink, Star, GitFork, Code, Calendar } from 'lucide-react'
+import { Github, ExternalLink, Star, GitFork, Code, Calendar, Download, Package } from 'lucide-react'
+import { SiGoogleplay, SiApple } from 'react-icons/si'
 import { GitHubRepo } from '@/types/github'
 import LoadingSpinner from '@/components/ui/LoadingSpinner'
 
@@ -53,10 +54,45 @@ export default function Projects() {
     }
   }
 
-  // Manual deployment URLs (Empty for now as requested)
+  // Manual deployment URLs
   const DEPLOYED_PROJECTS: Record<string, string> = {
-    // Example: 'Portfolio': 'https://your-portfolio-url.com',
+    'Portfolio': 'https://ateeshay-rawat.netlify.app/',
+    'Productivity-OS': 'https://productivity-os.vercel.app/',
+    'CampusCravings': 'https://campuscravings-1-bso7.onrender.com/admin/login',
+    'iDeiaCard': 'https://ideiacard.com.br/',
   }
+
+  // Project descriptions with additional info
+  const PROJECT_DESCRIPTIONS: Record<string, string> = {
+    'iDeiaCard': 'Student management ecosystem with face recognition - Login: testschool@otomator.com / 12345678 - Also available on Play Store: https://play.google.com/store/apps/developer?id=iDeiaCard&hl=en',
+  }
+
+  // Custom tech stack for projects
+  const CUSTOM_TECH_STACK: Record<string, string> = {
+    'CampusCravings': 'MERN Stack, React Native',
+    'Productivity-OS': 'MERN Stack',
+  }
+
+  // Projects with APK downloads
+  const APK_PROJECTS: Record<string, string> = {
+    'CampusCravings': '/CampusCravings.apk',
+  }
+
+  // Manual projects not on GitHub
+  const MANUAL_PROJECTS = [
+    {
+      id: 'ideiacard',
+      name: 'iDeiaCard',
+      description: 'Student management ecosystem with face recognition - Login: testschool@otomator.com / 12345678',
+      language: 'Full Stack',
+      url: 'https://ideiacard.com.br/',
+      playstoreUrl: 'https://play.google.com/store/apps/developer?id=iDeiaCard&hl=en',
+      appstoreUrl: 'https://apps.apple.com/in/iphone/search?term=ideiacard',
+      stargazers_count: 0,
+      forks_count: 0,
+      updated_at: new Date().toISOString(),
+    }
+  ]
 
   const getDeploymentInfo = (repo: GitHubRepo) => {
     const manualUrl = DEPLOYED_PROJECTS[repo.name]
@@ -116,6 +152,11 @@ export default function Projects() {
     if (name === 'Portfolio') {
       return 'My personal portfolio website showcasing my projects and skills.'
     }
+
+    // Check if custom description exists
+    if (PROJECT_DESCRIPTIONS[name]) {
+      return PROJECT_DESCRIPTIONS[name]
+    }
     
     if (hasDeployment) return `${cleanName} - Live project available.`
     return `${cleanName} - Built with ${language || 'code'}.`
@@ -132,7 +173,7 @@ export default function Projects() {
           className="text-center mb-16"
         >
           <motion.h2 variants={itemVariants} className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-            Featured <span className="gradient-text">Projects</span>
+            Projects Contributed <span className="gradient-text">In</span>
           </motion.h2>
           <motion.p variants={itemVariants} className="text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
             A showcase of my latest work from GitHub
@@ -160,6 +201,92 @@ export default function Projects() {
             variants={containerVariants}
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
           >
+            {/* Manual Projects */}
+            {MANUAL_PROJECTS.map((project) => (
+              <motion.div
+                key={project.id}
+                variants={itemVariants}
+                whileHover={{ scale: 1.02, y: -8 }}
+                className="glass-effect rounded-xl p-6 group hover:shadow-2xl transition-all duration-300 border border-white/20 dark:border-white/10"
+              >
+                <div className="flex items-start justify-between mb-4">
+                  <div className="flex-1">
+                    <h3 className="text-lg font-bold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors mb-2">
+                      {project.name}
+                    </h3>
+                    {project.language && (
+                      <div className="flex items-center space-x-2">
+                        <div className="w-3 h-3 rounded-full bg-purple-500" />
+                        <span className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                          {project.language}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                  
+                  <div className="flex space-x-2 ml-4">
+                    <motion.a
+                      href={project.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                      className="p-2 rounded-lg bg-primary-600 hover:bg-primary-700 text-white transition-colors"
+                    >
+                      <ExternalLink className="h-4 w-4" />
+                    </motion.a>
+                    {project.playstoreUrl && (
+                      <motion.a
+                        href={project.playstoreUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                        className="p-2 rounded-lg bg-green-600 hover:bg-green-700 text-white transition-colors"
+                        title="View on Google Play Store"
+                      >
+                        <SiGoogleplay className="h-4 w-4" />
+                      </motion.a>
+                    )}
+                    {project.appstoreUrl && (
+                      <motion.a
+                        href={project.appstoreUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                        className="p-2 rounded-lg bg-gray-800 hover:bg-gray-900 text-white transition-colors"
+                        title="View on Apple App Store"
+                      >
+                        <SiApple className="h-4 w-4" />
+                      </motion.a>
+                    )}
+                  </div>
+                </div>
+
+                <p className="text-gray-600 dark:text-gray-400 mb-4 text-sm leading-relaxed">
+                  {project.description}
+                </p>
+
+                <div className="flex items-center justify-between mt-auto">
+                  <div className="flex items-center space-x-4 text-sm text-gray-500">
+                    <div className="flex items-center space-x-1">
+                      <Star className="h-4 w-4" />
+                      <span>{project.stargazers_count}</span>
+                    </div>
+                    <div className="flex items-center space-x-1">
+                      <GitFork className="h-4 w-4" />
+                      <span>{project.forks_count}</span>
+                    </div>
+                  </div>
+                  <span className="text-xs text-gray-500">
+                    {formatDate(project.updated_at)}
+                  </span>
+                </div>
+              </motion.div>
+            ))}
+
+            {/* GitHub Repos */}
             {repos.map((repo) => {
               const { hasDeployment, deploymentUrl } = getDeploymentInfo(repo)
               
@@ -175,11 +302,11 @@ export default function Projects() {
                       <h3 className="text-lg font-bold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors mb-2">
                         {repo.name.replace(/-/g, ' ')}
                       </h3>
-                      {repo.language && (
+                      {(CUSTOM_TECH_STACK[repo.name] || repo.language) && (
                         <div className="flex items-center space-x-2">
-                          <div className={`w-3 h-3 rounded-full ${getLanguageColor(repo.language)}`} />
+                          <div className={`w-3 h-3 rounded-full ${getLanguageColor(CUSTOM_TECH_STACK[repo.name] || repo.language)}`} />
                           <span className="text-sm font-medium text-gray-600 dark:text-gray-400">
-                            {repo.language}
+                            {CUSTOM_TECH_STACK[repo.name] || repo.language}
                           </span>
                         </div>
                       )}
@@ -206,6 +333,18 @@ export default function Projects() {
                           className="p-2 rounded-lg bg-primary-600 hover:bg-primary-700 text-white transition-colors"
                         >
                           <ExternalLink className="h-4 w-4" />
+                        </motion.a>
+                      )}
+                      {APK_PROJECTS[repo.name] && (
+                        <motion.a
+                          href={APK_PROJECTS[repo.name]}
+                          download
+                          whileHover={{ scale: 1.1 }}
+                          whileTap={{ scale: 0.9 }}
+                          className="p-2 rounded-lg bg-green-600 hover:bg-green-700 text-white transition-colors"
+                          title="Download APK"
+                        >
+                          <Download className="h-4 w-4" />
                         </motion.a>
                       )}
                     </div>
