@@ -1,5 +1,30 @@
 import { NextResponse } from 'next/server'
 
+type PinnedRepositoryNode = {
+  id: string
+  name: string
+  description: string | null
+  url: string
+  homepageUrl: string | null
+  languages: {
+    nodes: Array<{ name: string }>
+  }
+  stargazerCount: number
+  forkCount: number
+  updatedAt: string
+}
+
+type GithubGraphQLResponse = {
+  data?: {
+    user?: {
+      pinnedItems?: {
+        nodes?: PinnedRepositoryNode[]
+      }
+    }
+  }
+  errors?: Array<{ message: string }>
+}
+
 export async function GET() {
   const username = 'Atee-Rawat' // Updated to your username
   const githubToken = process.env.GITHUB_TOKEN
@@ -55,14 +80,14 @@ export async function GET() {
 
     console.log('GraphQL Response status:', response.status)
 
-    const result = await response.json()
+    const result = (await response.json()) as GithubGraphQLResponse
 
     console.log('GraphQL Result:', JSON.stringify(result).substring(0, 500))
 
-    if (result.errors) {
+    if (result.errors?.length) {
       console.error('GraphQL Errors:', result.errors)
       return NextResponse.json(
-        { error: result.errors[0].message }, 
+        { error: result.errors[0].message },
         { status: 400 }
       )
     }
@@ -75,7 +100,7 @@ export async function GET() {
     }
 
     // Transform GraphQL response to match REST API format
-    const pinnedRepos = result.data.user.pinnedItems.nodes.map((repo: any) => ({
+    const pinnedRepos = (result.data?.user?.pinnedItems?.nodes ?? []).map((repo) => ({
       id: repo.id,
       name: repo.name,
       description: repo.description,
@@ -93,7 +118,7 @@ export async function GET() {
     responseHeaders.set('Cache-Control', 'no-store, max-age=0')
     
     return NextResponse.json(pinnedRepos, { headers: responseHeaders })
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: 'Internal Server Error' }, 
       { status: 500 }

@@ -153,6 +153,12 @@ export default function MemoryGame({ onClose }: { onClose: () => void }) {
             <div className="flex flex-col items-center space-y-6">
                 <p className="text-xl font-bold text-white">🧠 Memory Match</p>
                 <p className="text-gray-400 text-sm">Match tech stack icons!</p>
+                <button
+                    onClick={onClose}
+                    className="text-xs text-gray-500 hover:text-white transition-colors"
+                >
+                    Close game
+                </button>
                 <div className="flex gap-3">
                     {(['easy', 'medium', 'hard'] as Difficulty[]).map(diff => (
                         <motion.button

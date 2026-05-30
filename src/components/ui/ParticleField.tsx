@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState, useCallback } from 'react'
+import { useEffect, useRef, useCallback } from 'react'
 
 interface Particle {
     x: number
@@ -19,8 +19,6 @@ export default function ParticleField() {
     const particlesRef = useRef<Particle[]>([])
     const mouseRef = useRef({ x: -1000, y: -1000 })
     const animationRef = useRef<number>(0)
-    const [dimensions, setDimensions] = useState({ width: 0, height: 0 })
-
     const initParticles = useCallback((width: number, height: number) => {
         const count = Math.min(80, Math.floor((width * height) / 15000))
         const particles: Particle[] = []
@@ -125,7 +123,6 @@ export default function ParticleField() {
             const h = window.innerHeight
             canvas.width = w
             canvas.height = h
-            setDimensions({ width: w, height: h })
             initParticles(w, h)
         }
 

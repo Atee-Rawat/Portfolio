@@ -1,6 +1,5 @@
 'use client'
 
-import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { SKILLS } from '@/utils/constants'
 
@@ -13,13 +12,13 @@ const ADD_SKILLS = {
   tools: ['Git', 'GitHub', 'Postman', 'Docker', 'Android Studio', 'VS Code'],
 } as const
 
-const mergeSkills = (base: any, add: any) =>
+const mergeSkills = (base: Record<string, readonly string[]>, add: Record<string, readonly string[]>) =>
   Object.fromEntries(
     Object.keys(base).map((k) => [
       k,
       Array.from(new Set([...(base[k] ?? []), ...(add[k] ?? [])])),
     ])
-  )
+  ) as Record<string, string[]>
 
 const MERGED = mergeSkills(SKILLS, ADD_SKILLS)
 
@@ -33,8 +32,6 @@ const skillCategories = [
 ]
 
 export default function Skills() {
-  const [hoveredCategory, setHoveredCategory] = useState<number | null>(null)
-
   return (
     <section id="skills" className="py-20 relative overflow-hidden">
       {/* Background decorative elements */}
@@ -70,8 +67,6 @@ export default function Skills() {
               whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
               viewport={{ once: true }}
               transition={{ delay: categoryIndex * 0.1, duration: 0.6 }}
-              onMouseEnter={() => setHoveredCategory(categoryIndex)}
-              onMouseLeave={() => setHoveredCategory(null)}
               className="group glass-effect rounded-xl p-6 relative overflow-hidden"
               style={{
                 perspective: '1000px',

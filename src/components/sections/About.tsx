@@ -1,9 +1,9 @@
 'use client'
 
 import { motion, useMotionValue, useSpring } from 'framer-motion'
-import { MapPin, GraduationCap, Award, Code, Briefcase, Cloud, Cpu, Layers } from 'lucide-react'
+import { MapPin, GraduationCap, Code, Cloud, Cpu, Layers } from 'lucide-react'
 import { PERSONAL_INFO } from '@/utils/constants'
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 
 const stats = [
   { icon: Code, label: 'Web + Mobile', desc: 'React, Next.js, React Native, Node.js', color: 'from-blue-500 to-cyan-500' },
@@ -14,8 +14,6 @@ const stats = [
 
 function TiltCard({ children, className }: { children: React.ReactNode; className?: string }) {
   const ref = useRef<HTMLDivElement>(null)
-  const x = useMotionValue(0)
-  const y = useMotionValue(0)
   const rotateX = useSpring(useMotionValue(0), { stiffness: 200, damping: 20 })
   const rotateY = useSpring(useMotionValue(0), { stiffness: 200, damping: 20 })
 

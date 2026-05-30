@@ -1,8 +1,8 @@
 'use client'
 
-import { useState, useRef, useCallback } from 'react'
+import { useState, useCallback } from 'react'
 import { motion } from 'framer-motion'
-import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle } from 'lucide-react'
+import { Mail, Phone, Send, CheckCircle, AlertCircle } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import emailjs from '@emailjs/browser'
 import { PERSONAL_INFO } from '@/utils/constants'
@@ -74,7 +74,7 @@ export default function Contact() {
       reset()
       fireConfetti()
       setTimeout(() => setStatus('idle'), 5000)
-    } catch (error) {
+    } catch {
       setStatus('error')
       setTimeout(() => setStatus('idle'), 5000)
     }
@@ -100,7 +100,7 @@ export default function Contact() {
             Get In <span className="gradient-text">Touch</span>
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-            Have a project in mind or want to collaborate? I'd love to hear from you!
+            Have a project in mind or want to collaborate? I&apos;d love to hear from you!
           </p>
         </motion.div>
 
@@ -215,7 +215,7 @@ export default function Contact() {
                   className="flex items-center space-x-2 text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20 p-3 rounded-lg"
                 >
                   <CheckCircle className="h-5 w-5" />
-                  <span>Message sent successfully! I'll get back to you soon. 🎉</span>
+                  <span>Message sent successfully! I&apos;ll get back to you soon. 🎉</span>
                 </motion.div>
               )}
 
@@ -241,7 +241,7 @@ export default function Contact() {
           >
             <div>
               <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
-                Let's Connect 🤝
+                Let&apos;s Connect 🤝
               </h3>
               <p className="text-gray-600 dark:text-gray-400 mb-8">
                 Feel free to reach out for collaborations, opportunities, or just to say hello!

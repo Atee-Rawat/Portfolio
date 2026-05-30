@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { Github, ExternalLink, Star, GitFork, Code, Calendar, Download, Package } from 'lucide-react'
+import { Github, ExternalLink, Star, GitFork, Download } from 'lucide-react'
 import { SiGoogleplay, SiApple } from 'react-icons/si'
 import { GitHubRepo } from '@/types/github'
 import LoadingSpinner from '@/components/ui/LoadingSpinner'
@@ -47,12 +47,6 @@ export default function Projects() {
 
     fetchRepos()
   }, [])
-
-  const handleReload = () => {
-    if (typeof window !== 'undefined') {
-      window.location.reload()
-    }
-  }
 
   // Manual deployment URLs
   const DEPLOYED_PROJECTS: Record<string, string> = {
