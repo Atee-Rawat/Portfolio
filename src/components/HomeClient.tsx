@@ -18,13 +18,11 @@ import Chatbot from '@/components/interactive/Chatbot'
 import GameLauncher from '@/components/interactive/GameLauncher'
 
 export default function HomeClient() {
-    const [mounted, setMounted] = useState(false)
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         const timer = setTimeout(() => {
             setLoading(false)
-            setMounted(true)
         }, 3000)
 
         return () => clearTimeout(timer)
@@ -36,25 +34,23 @@ export default function HomeClient() {
                 {loading && <Loader key="loader" />}
             </AnimatePresence>
 
-            {mounted && (
-                <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:from-gray-900 dark:via-slate-900 dark:to-black transition-all duration-500">
-                    <ScrollProgress />
-                    <Navbar />
-                    <main className="relative overflow-x-hidden">
-                        <Hero />
-                        <About />
-                        <Skills />
-                        <Education />
-                        <Certificates />
-                        <Projects />
-                        <GameSection />
-                        <Contact />
-                    </main>
-                    <Footer />
-                    <Chatbot />
-                    <GameLauncher />
-                </div>
-            )}
+            <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:from-gray-900 dark:via-slate-900 dark:to-black transition-all duration-500">
+                <ScrollProgress />
+                <Navbar />
+                <main className="relative overflow-x-hidden">
+                    <Hero />
+                    <About />
+                    <Skills />
+                    <Education />
+                    <Certificates />
+                    <Projects />
+                    <GameSection />
+                    <Contact />
+                </main>
+                <Footer />
+                <Chatbot />
+                <GameLauncher />
+            </div>
         </>
     )
 }
