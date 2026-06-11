@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState, useCallback, useMemo } from 'react'
+import { useEffect, useRef, useState, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Map, X, Rocket, Crosshair, ChevronRight } from 'lucide-react'
 
@@ -301,14 +301,12 @@ export default function TechnologyExplorationSimulator() {
         }
 
         // ── Collectibles (Technology Nodes) ──
-        let newDiscovery = false;
         for (const c of level.collectibles) {
             if (c.collected) continue
             const dx = (p.x + p.width / 2) - (c.x + c.size / 2)
             const dy = (p.y + p.height / 2) - (c.y + c.size / 2)
             if (Math.sqrt(dx * dx + dy * dy) < 40) {
                 c.collected = true
-                newDiscovery = true
                 setDiscoveredSkills(prev => {
                     const next = [...prev, c.label]
                     if (next.length === totalSkills) {

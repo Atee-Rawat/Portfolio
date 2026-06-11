@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { Target, Cpu, Layers, Activity, Cloud } from 'lucide-react'
 
 const AboutBackground = () => {
@@ -220,7 +220,7 @@ export default function About() {
                <div className="mb-10">
                   <p className="text-[10px] font-mono text-gray-500 dark:text-slate-500 mb-2 tracking-widest">MISSION STATEMENT</p>
                   <p className="text-sm text-gray-700 dark:text-slate-300 leading-relaxed italic border-l-2 border-cyan-500 pl-4 font-medium">
-                    "Designing scalable systems, intelligent applications, and cloud infrastructure that transform ambitious ideas into real-world products."
+                    &quot;Designing scalable systems, intelligent applications, and cloud infrastructure that transform ambitious ideas into real-world products.&quot;
                   </p>
                </div>
 
@@ -248,7 +248,7 @@ export default function About() {
 
                <div className="mt-10 pt-6 border-t border-gray-200 dark:border-cyan-900/50 bg-cyan-50/50 dark:bg-transparent -mx-6 sm:-mx-8 -mb-6 sm:-mb-8 p-6 sm:p-8 rounded-b-2xl">
                   <p className="text-sm text-cyan-800 dark:text-cyan-200 font-semibold font-mono text-center leading-relaxed">
-                    "I don't just write code. I design systems capable of scaling beyond today's challenges."
+                    &quot;I don&apos;t just write code. I design systems capable of scaling beyond today&apos;s challenges.&quot;
                   </p>
                </div>
             </div>

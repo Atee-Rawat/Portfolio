@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
 import { useRef } from 'react'
@@ -173,7 +174,7 @@ const MissionDossier = ({ mission, index }: { mission: any, index: number }) => 
 
               <div className="mb-10 bg-indigo-50/80 dark:bg-indigo-900/20 border-l-2 border-indigo-500 p-4 rounded-r-lg">
                 <p className="text-[10px] text-indigo-800 dark:text-indigo-400 uppercase tracking-widest mb-1.5 font-semibold">MISSION OUTCOME</p>
-                <p className="text-[13px] sm:text-sm text-gray-800 dark:text-slate-300 italic font-mono leading-relaxed">"{mission.outcome}"</p>
+                <p className="text-[13px] sm:text-sm text-gray-800 dark:text-slate-300 italic font-mono leading-relaxed">&quot;{mission.outcome}&quot;</p>
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4 relative z-10">

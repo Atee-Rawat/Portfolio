@@ -154,7 +154,7 @@ export default function Footer() {
                </div>
                <div>
                   <p className="text-[9px] font-mono text-gray-500 uppercase tracking-widest mb-1.5">MISSION OBJECTIVE</p>
-                  <p className="text-[10px] font-mono text-gray-400 leading-relaxed italic border-l-2 border-white/10 pl-3">"Building scalable digital systems for the next technological frontier."</p>
+                  <p className="text-[10px] font-mono text-gray-400 leading-relaxed italic border-l-2 border-white/10 pl-3">&quot;Building scalable digital systems for the next technological frontier.&quot;</p>
                </div>
             </div>
           </motion.div>

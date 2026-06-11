@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
-import { useRef } from 'react'
+
 import { motion } from 'framer-motion'
 import { CheckCircle2, Cpu, Globe, Database, Cloud, Radio, Rocket, Activity, Network, Brain, Search, Zap } from 'lucide-react'
-import { FaReact, FaNodeJs, FaAws, FaDocker, FaPhp } from 'react-icons/fa'
+import { FaReact, FaNodeJs, FaAws, FaPhp } from 'react-icons/fa'
 import { SiNextdotjs, SiTypescript, SiTailwindcss, SiExpress, SiGo, SiSocketdotio, SiMqtt, SiGooglecloud, SiMongodb, SiMysql, SiRedis, SiFirebase, SiGooglegemini } from 'react-icons/si'
 import { VscAzure } from 'react-icons/vsc'
 
@@ -53,7 +54,7 @@ const OrbitingNode = ({ radius, speed, delay, icon: Icon, color, size = 20 }: an
   )
 }
 
-const MissionModule = ({ module, align }: any) => {
+const MissionModule = ({ module }: any) => {
   return (
     <motion.div 
       initial={{ opacity: 0, y: 20 }}

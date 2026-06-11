@@ -28,6 +28,7 @@ const EducationBackground = () => (
   </div>
 )
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const ArchivePanel = ({ phase, title, institution, classification, designation, modules, outcome, performance, status, years, icon: Icon, align }: any) => {
   return (
     <div className={`relative flex items-center mb-16 ${align === 'left' ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
@@ -102,7 +103,7 @@ const ArchivePanel = ({ phase, title, institution, classification, designation, 
     
              <div className="mb-6 relative z-10 bg-cyan-50/50 dark:bg-cyan-900/10 p-3 rounded-lg border border-cyan-100 dark:border-cyan-900/30">
                 <p className="text-[10px] text-cyan-800 dark:text-cyan-500 uppercase tracking-widest mb-1.5 font-semibold">MISSION OUTCOME</p>
-                <p className="text-[13px] text-gray-700 dark:text-slate-300 italic border-l-2 border-cyan-400 pl-3">"{outcome}"</p>
+                <p className="text-[13px] text-gray-700 dark:text-slate-300 italic border-l-2 border-cyan-400 pl-3">&quot;{outcome}&quot;</p>
              </div>
     
              <div className="flex justify-between items-end relative z-10 pt-4 border-t border-cyan-100 dark:border-cyan-900/50">
@@ -226,7 +227,7 @@ const KnowledgeMap = () => {
                    
                    <div>
                      <p className="text-[9px] text-gray-500 dark:text-slate-500 uppercase tracking-wider mb-1">Operational Relevance</p>
-                     <p className="text-xs text-cyan-800 dark:text-cyan-400 italic">"{node.relevance}"</p>
+                     <p className="text-xs text-cyan-800 dark:text-cyan-400 italic">&quot;{node.relevance}&quot;</p>
                    </div>
                  </motion.div>
                )}
@@ -257,7 +258,7 @@ const KnowledgeMap = () => {
                  </div>
                  <div>
                    <p className="text-[9px] text-gray-500 dark:text-slate-500 uppercase tracking-wider mb-1">RELEVANCE</p>
-                   <p className="text-xs text-cyan-700 dark:text-cyan-400 italic">"{node.relevance}"</p>
+                   <p className="text-xs text-cyan-700 dark:text-cyan-400 italic">&quot;{node.relevance}&quot;</p>
                  </div>
                </div>
             </motion.div>

@@ -2,10 +2,10 @@
 
 import { useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
-import { Crosshair, Activity, MapPin, User, Clock, Rocket, FileText, Target, ArrowDown, Database, Cpu, Globe, Cloud, GitBranch, Layers } from 'lucide-react'
+import { Crosshair, Activity, MapPin, User, Clock, Rocket, FileText, Target, ArrowDown, Database, Cpu, Globe, Layers } from 'lucide-react'
 import { FaReact, FaNodeJs, FaAws, FaDocker, FaGitAlt } from 'react-icons/fa'
 import { 
-  SiNextdotjs, SiTypescript, SiGooglecloud, SiPostgresql, SiCplusplus, 
+  SiNextdotjs, SiTypescript, SiGooglecloud, SiCplusplus,
   SiPython, SiJavascript, SiPhp, SiGo, SiTailwindcss, SiExpress, 
   SiMongodb, SiMysql, SiRedis, SiFirebase, SiSocketdotio, SiMqtt,
   SiGooglegemini
