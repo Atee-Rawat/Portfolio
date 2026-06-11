@@ -11,7 +11,7 @@ export const PERSONAL_INFO = {
     'Full Stack & DevOps • Web + Mobile • MERN, React Native, LAMP, Next.js, TypeScript • AWS • Azure • GCP • DigitalOcean • GitHub • Postman • Docker',
   location: 'Greater Noida, India',
   university: 'Bennett University',
-  degree: 'B.Tech in Computer Science and Engineering',
+  degree: 'B.Tech in Computer Science and Engineering • CGPA: 8.0',
   graduationYear: '2026'
 }
 

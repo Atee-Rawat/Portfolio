@@ -31,7 +31,7 @@ export default function Education() {
       institution: PERSONAL_INFO.university,
       degree: PERSONAL_INFO.degree,
       duration: '2022 - 2026',
-      status: 'current' as const,
+      status: 'completed' as const,
       icon: GraduationCap,
       color: 'from-blue-500 to-purple-600',
     },
@@ -100,13 +100,6 @@ export default function Education() {
                 <div className={`w-12 h-12 rounded-full bg-gradient-to-br ${education.color} flex items-center justify-center shadow-lg`}>
                   <education.icon className="h-6 w-6 text-white" />
                 </div>
-                {education.status === 'current' && (
-                  <motion.div
-                    className="absolute inset-0 rounded-full border-2 border-blue-400"
-                    animate={{ scale: [1, 1.5, 1], opacity: [0.5, 0, 0.5] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                  />
-                )}
               </motion.div>
 
               {/* Card */}
@@ -135,12 +128,12 @@ export default function Education() {
                   </p>
 
                   <span
-                    className={`inline-block mt-3 px-3 py-1 rounded-full text-xs font-medium ${education.status === 'current'
+                    className={`inline-block mt-3 px-3 py-1 rounded-full text-xs font-medium ${education.status === 'completed'
                         ? 'bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300'
                         : 'bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300'
                       }`}
                   >
-                    {education.status === 'current' ? '⚡ In Progress' : '✅ Completed'}
+                    ✅ Completed
                   </span>
                 </div>
               </motion.div>
@@ -157,10 +150,10 @@ export default function Education() {
         >
           <div className="glass-effect rounded-2xl p-8">
             <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2 text-center">
-              Current Academic Focus
+              College Academics
             </h3>
             <p className="text-center text-gray-600 dark:text-gray-400 mb-6 text-sm">
-              Currently in 7th Semester • Expected Graduation: {PERSONAL_INFO.graduationYear}
+              Graduated: {PERSONAL_INFO.graduationYear}
             </p>
 
             <h4 className="font-semibold text-gray-900 dark:text-white mb-4">
