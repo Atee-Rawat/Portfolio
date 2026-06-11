@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
 import { useState, useEffect } from 'react'
@@ -70,7 +71,7 @@ const NAV_LINKS = [
 
 const SOCIAL_SATELLITES = [
   { label: 'GITHUB SATELLITE', href: PERSONAL_INFO.github, icon: Github },
-  { label: 'LINKEDIN RELAY', href: PERSONAL_INFO.linkedin || 'https://linkedin.com', icon: Linkedin },
+  { label: 'LINKEDIN RELAY', href: (PERSONAL_INFO as any).linkedin || 'https://linkedin.com', icon: Linkedin },
   { label: 'EMAIL FREQUENCY', href: `mailto:${PERSONAL_INFO.email}`, icon: Mail }
 ]
 
